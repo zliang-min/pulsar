@@ -46,6 +46,16 @@ public class BatchDataGeneratorSource implements BatchSource<Person> {
     @Override
     public void discover(Consumer<byte[]> taskEater) {
         log.info("Generating one task for each instance");
+        try {
+          Thread.sleep(300000);
+        } catch (InterruptedException e) {
+          log.info("Sleep got interrupted");
+          try {
+            Thread.sleep(11000);
+          } catch (InterruptedException e1) {
+            log.info("Sleep got interrupted again");
+          }
+        }
         for (int i = 0; i < sourceContext.getNumInstances(); ++i) {
             taskEater.accept("something".getBytes(StandardCharsets.UTF_8));
         }
